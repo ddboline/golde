@@ -109,10 +109,10 @@ pub fn App<'a>(cx: Scope<'a, AppProps<'a>>) -> Element {
 
     let platform = (if wasm_runtime { "WASM" } else { "Desktop" }).to_string();
 
-    let (initialized, initialized_setter) = use_state(&cx, || false);
+    let (initialized, initialized_setter) = use_state(&cx, || false).split();
     if !initialized {
         log::info!("Dioxus [Golde] Runtime Platform: {}", platform);
-        initialized_setter(true);
+        initialized_setter.modify(|_| true);
     }
 
     let golde_event_queue = use_read(&cx, GOLDE_EVENT_QUEUE);
